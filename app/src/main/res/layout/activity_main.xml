@@ -16,6 +16,7 @@
 
     <Button
         android:layout_below="@id/textview_hello"
+        android:id="@+id/button_restore_from_db"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_restore_from_db" />
