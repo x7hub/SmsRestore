@@ -33,7 +33,6 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -43,12 +42,12 @@ import java.io.File;
  * Created by x7 on 12/18/14.
  */
 public class SdcardDbHelper extends SQLiteOpenHelper {
-    public static final String TAG = "SdcardDbHelper";
+    private static final String TAG = "SdcardDbHelper";
     private static final String DATABASE_NAME = "mmssms.db";
     private static final int DATABASE_VERSION = 1;
 
-    public SdcardDbHelper(Context context) {
-        super(new SdcardDbContext(context), DATABASE_NAME, null, DATABASE_VERSION);
+    public SdcardDbHelper(Context context, String filePath) {
+        super(new SdcardDbContext(context, filePath), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -85,20 +84,17 @@ public class SdcardDbHelper extends SQLiteOpenHelper {
      * open db file on sdcard
      */
     private static class SdcardDbContext extends ContextWrapper {
-        public SdcardDbContext(Context context) {
+        private String filePath;
+
+        public SdcardDbContext(Context context, String filePath) {
             super(context);
+            this.filePath = filePath;
         }
 
         @Override
         public File getDatabasePath(String name) {
-            if (!android.os.Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                Log.w(TAG, "no sdcard");
-                return null;
-            }
-            String dbPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + Config.getFilePath();
-            Log.i(TAG, dbPath);
-            File dbFile = new File(dbPath);
+            Log.i(TAG, filePath);
+            File dbFile = new File(filePath);
             if (!dbFile.exists()) {
                 Log.w(TAG, "no file");
                 return null;

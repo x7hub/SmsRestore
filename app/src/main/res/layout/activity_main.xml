@@ -16,9 +16,17 @@
 
     <Button
         android:layout_below="@id/textview_hello"
-        android:id="@+id/button_restore_from_db"
+        android:id="@+id/button_select_db_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_restore_from_db" />
+        android:text="@string/button_select_db_file" />
+
+    <Button
+        android:layout_below="@id/button_select_db_file"
+        android:id="@+id/button_restore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/button_restore" />
 
 </RelativeLayout>
